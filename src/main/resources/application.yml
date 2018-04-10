@@ -1,0 +1,8 @@
+spring:
+	application:
+		name: AudioConverterBot
+	datasource:
+		driverClassName: com.mysql.jdbc.Driver
+		url: jdbc:mysql://localhost/bot
+server:
+	port: 9000
