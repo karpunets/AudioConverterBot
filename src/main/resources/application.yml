@@ -1,8 +1,18 @@
-spring:
-	application:
-		name: AudioConverterBot
-	datasource:
-		driverClassName: com.mysql.jdbc.Driver
-		url: jdbc:mysql://localhost/bot
 server:
-	port: 9000
+  port: 9000
+spring:
+  application:
+    name: AudioConverterBot
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/audio_converter_bot
+    password: karpunets
+    username: karpunets
+    hikari:
+      connection-timeout: 20000
+telegram:
+  bot:
+    username: AudioConverterBot
+    token: 560931351:AAFxvrTrpbAg6Ro3CdmiWb3OhZkWOOojO5Q
+#logging:
+#  config: classpath:/logback.xml
