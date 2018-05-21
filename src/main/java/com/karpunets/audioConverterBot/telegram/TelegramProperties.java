@@ -9,10 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
 @Data
 @ConfigurationProperties("telegram")
 public class TelegramProperties {
@@ -26,8 +22,4 @@ public class TelegramProperties {
         @NotEmpty
         private String token;
     }
-
-//    public void setBot(Bot bot) {
-//        this.bot = bot;
-//    }
 }

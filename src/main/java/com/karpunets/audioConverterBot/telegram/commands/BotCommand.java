@@ -1,5 +1,6 @@
 package com.karpunets.audioConverterBot.telegram.commands;
 
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.bots.AbsSender;
 
@@ -7,12 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
 public interface BotCommand {
-
     String getCommandIdentifier();
 
     void processMessage(AbsSender absSender, Message message);

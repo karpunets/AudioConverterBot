@@ -4,15 +4,28 @@ spring:
   application:
     name: AudioConverterBot
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/audio_converter_bot
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:file:~/test
     password: karpunets
     username: karpunets
     hikari:
       connection-timeout: 20000
+  h2:
+    console:
+      enabled: true
+      path: /h2
 telegram:
   bot:
     username: AudioConverterBot
     token: 560931351:AAFxvrTrpbAg6Ro3CdmiWb3OhZkWOOojO5Q
-#logging:
-#  config: classpath:/logback.xml
+logging:
+  level:
+    org.springframework: INFO
+    org.hibernate: INFO
+    org.apache: INFO
+    com.zaxxer.hikari: INFO
+    com.karpunets: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: logs/application.log

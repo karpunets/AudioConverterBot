@@ -1,13 +1,10 @@
 package com.karpunets.audioConverterBot.telegram.handlers;
 
+import com.karpunets.audioConverterBot.telegram.AudioConverterBot;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.AbsSender;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
 @Service
 public class CallbackQueryTelegramHandler implements TelegramHandler {
 
@@ -17,8 +14,8 @@ public class CallbackQueryTelegramHandler implements TelegramHandler {
     }
 
     @Override
-    public void handle(Update update, AbsSender absSender) {
-
+    public void handle(Update update, AudioConverterBot converterBot) {
+        System.out.println(update);
     }
 
 }

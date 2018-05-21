@@ -1,28 +1,23 @@
 package com.karpunets.audioConverterBot.database.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Parameter;
 import org.telegram.telegrambots.api.objects.User;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.*;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
+import static javax.persistence.CascadeType.REMOVE;
+
 @Entity
-@Immutable
 @Getter
 @Setter(AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TelegramUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(nullable = false)
     private Integer telegramId;
@@ -31,18 +26,19 @@ public class TelegramUser {
     private String lastName;
     private String userName;
     private String languageCode;
-    @ElementCollection
-    private List<String> photos = new ArrayList<>();
+    @Setter
+    private AudioFile audioFile;
+    @OneToMany(mappedBy = "owner", cascade = REMOVE)
+    private Set<ConvertedFile> convertedFiles = new HashSet<>();
 
-    protected TelegramUser() {
+    private TelegramUser(User user) {
+        telegramId = user.getId();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        languageCode = user.getLanguageCode();
     }
 
-    public TelegramUser of(User user) {
-        TelegramUser telegramUser = new TelegramUser();
-        telegramUser.telegramId = user.getId();
-        telegramUser.firstName = user.getFirstName();
-        telegramUser.lastName = user.getLastName();
-        telegramUser.languageCode = user.getLanguageCode();
-        return telegramUser;
+    public static TelegramUser of(User user) {
+        return new TelegramUser(user);
     }
 }

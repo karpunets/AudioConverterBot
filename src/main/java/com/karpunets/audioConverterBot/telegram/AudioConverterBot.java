@@ -3,18 +3,17 @@ package com.karpunets.audioConverterBot.telegram;
 import com.karpunets.audioConverterBot.telegram.services.TelegramEventProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.api.methods.GetFile;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -44,5 +43,11 @@ public class AudioConverterBot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         return properties.getBot().getToken();
+    }
+
+    public String getFileUrl(String fileId) throws TelegramApiException {
+        GetFile getFile = new GetFile().setFileId(fileId);
+        return execute(getFile).getFileUrl(properties.getBot().getToken());
+//        FileUtils.copyURLToFile(fileUrl, File)
     }
 }

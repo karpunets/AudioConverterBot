@@ -11,10 +11,6 @@ import org.telegram.telegrambots.TelegramBotsApi;
 
 import java.util.Arrays;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(TelegramProperties.class)

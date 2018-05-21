@@ -1,9 +1,5 @@
 package com.karpunets.audioConverterBot.telegram.exceptions;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
 public class TelegramRuntimeException extends RuntimeException {
     TelegramRuntimeException() {
     }

@@ -2,10 +2,17 @@ package com.karpunets.audioConverterBot.database.dao;
 
 import com.karpunets.audioConverterBot.database.model.TelegramUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.telegram.telegrambots.api.objects.User;
 
-/**
- * Created by Karpunets on 10.04.2018
- * Project: AudioConverterBot
- */
+import javax.transaction.Transactional;
+import java.util.Optional;
+
 public interface TelegramUserRepository extends JpaRepository<TelegramUser, Long> {
+
+    Optional<TelegramUser> findByTelegramId(Integer telegramId);
+
+    @Transactional
+    default TelegramUser findOrCreateUser(User user) {
+        return findByTelegramId(user.getId()).orElseGet(() -> save(TelegramUser.of(user)));
+    }
 }
