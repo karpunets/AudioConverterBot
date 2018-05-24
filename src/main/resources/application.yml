@@ -14,10 +14,7 @@ spring:
     console:
       enabled: true
       path: /h2
-telegram:
-  bot:
-    username: AudioConverterBot
-    token: 560931351:AAFxvrTrpbAg6Ro3CdmiWb3OhZkWOOojO5Q
+
 logging:
   level:
     org.springframework: INFO
@@ -29,3 +26,14 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file: logs/application.log
+
+telegram:
+  bot:
+    username: AudioConverterBot
+    token: 560931351:AAFxvrTrpbAg6Ro3CdmiWb3OhZkWOOojO5Q
+ffmpeg:
+  ffmpeg-path: ./ffmpeg-4.0-win64-shared/bin/ffmpeg
+  ffprobe-path: ./ffmpeg-4.0-win64-shared/bin/ffprobe
+storage:
+  audio:
+    src: ./tmp
