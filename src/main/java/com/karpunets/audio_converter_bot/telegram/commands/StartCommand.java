@@ -34,6 +34,6 @@ public class StartCommand implements BotCommand {
     public void processMessage(AbsSender absSender, Message message) {
         User from = message.getFrom();
         telegramUserRepository.findOrCreateUser(from, message.getChatId());
-        absSender.execute(new SendMessage(message.getChatId(), "Welcome"));
+        absSender.execute(new SendMessage(message.getChatId(), "Ласкаво просимо! Для початку конвертації достатньо завантажити файл або записати голосове повідомлення"));
     }
 }

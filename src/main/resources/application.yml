@@ -4,16 +4,19 @@ spring:
   application:
     name: AudioConverterBot
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:file:~/test
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/audio_converter_bot
     password: karpunets
     username: karpunets
     hikari:
       connection-timeout: 20000
-  h2:
-    console:
-      enabled: true
-      path: /h2
+  jpa:
+    hibernate:
+      ddl-auto: update
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
 
 logging:
   level:

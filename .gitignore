@@ -13,3 +13,4 @@ buildNumber.properties
 
 .idea/
 logs/
+ffmpeg-4.0-win64-shared/

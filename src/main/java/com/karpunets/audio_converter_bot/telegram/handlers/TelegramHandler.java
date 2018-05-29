@@ -21,6 +21,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -43,31 +44,39 @@ public interface TelegramHandler {
 
         converterBot.execute(new SendMessage()
                 .setChatId(message.getChatId())
-                .setText("I'm downloading."));
+                .setText("Початок завантаження..."));
 
         File downloadedFile = audioStorageService.downloadFile(fileUrl);
         telegramUser.refreshAudioFile(fileId, downloadedFile);
 
         converterBot.execute(new SendMessage()
                 .setChatId(message.getChatId())
-                .setText("I've download."));
+                .setText("Я закінчив завантаження."));
     }
 
     //private
     @SneakyThrows
     static void sendFormatKeyboard(AudioConverterBot converterBot, Message message) {
-        KeyboardRow keyboardRow = new KeyboardRow();
-        SupportedFormat.names().forEach(keyboardRow::add);
-
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.getKeyboard().add(keyboardRow);
+        replyKeyboardMarkup.getKeyboard().add(new KeyboardRow());
+
+        SupportedFormat.names().forEach(text -> {
+            List<KeyboardRow> keyboards = replyKeyboardMarkup.getKeyboard();
+            KeyboardRow keyboardRow = keyboards.get(keyboards.size() - 1);
+            if (keyboardRow.size() == 4) {
+                keyboardRow = new KeyboardRow();
+                keyboards.add(keyboardRow);
+            }
+            keyboardRow.add(text);
+        });
+
 
         replyKeyboardMarkup.setOneTimeKeyboard(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
 
         converterBot.execute(new SendMessage()
                 .setChatId(message.getChatId())
-                .setText("In what format do you want to be file converted?")
+                    .setText("В який формат потрібно конвертувати?")
                 .setReplyMarkup(replyKeyboardMarkup));
     }
 
@@ -79,7 +88,7 @@ public interface TelegramHandler {
                                                        ConvertedFileRepository convertedFileRepository) {
         converterBot.execute(new SendMessage()
                 .setChatId(message.getChatId())
-                .setText("Trying converting"));
+                .setText("Початок конвертації..."));
 
         return audioConverterService
                 .convert(telegramUser.getAudioFile())
@@ -87,7 +96,8 @@ public interface TelegramHandler {
                     try {
                         converterBot.sendAudio(new SendAudio()
                                 .setChatId(message.getChatId())
-                                .setCaption("Thank you for using, for all questions - arthur.karpunets@gmail.com.")
+                                .setTitle("converted" + convertedFile.getFormat().getFileFormat())
+                                .setCaption("Дякую за користування. Будь які питання та пропозиції чекатиму на - arthur.karpunets@gmail.com.")
                                 .setNewAudio(convertedFile.getFile()));
                     } catch (TelegramApiException e) {
                         Throwables.throwIfUnchecked(e);
@@ -97,7 +107,7 @@ public interface TelegramHandler {
                     try {
                         converterBot.execute(new SendMessage()
                                 .setChatId(message.getChatId())
-                                .setText("There was a problem\n We are already trying to fix this."));
+                                .setText("Проблема конвертації. Ми вже працюємо над цією проблемою."));
                     } catch (TelegramApiException e) {
                         Throwables.throwIfUnchecked(e);
                     }

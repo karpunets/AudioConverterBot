@@ -11,9 +11,13 @@ import static java.util.Arrays.stream;
 @RequiredArgsConstructor
 public enum SupportedFormat {
     FLAC(".flac"),
-    AC3(".ac3"),
     MP3(".mp3"),
-    WMA(".wma");
+    WMA(".wma"),
+    AIFF(".aiff"),
+    ACC(".aac"),
+    OGG(".ogg"),
+    WV(".wv"),
+    AC3(".ac3");
 
     private static final Set<String> names;
     private final String fileFormat;
