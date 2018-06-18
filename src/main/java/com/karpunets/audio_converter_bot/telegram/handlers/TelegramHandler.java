@@ -2,9 +2,9 @@ package com.karpunets.audio_converter_bot.telegram.handlers;
 
 import com.google.common.base.Throwables;
 import com.karpunets.audio_converter_bot.dao.ConvertedFileRepository;
+import com.karpunets.audio_converter_bot.ffmpeg.SupportedFormat;
 import com.karpunets.audio_converter_bot.model.ConvertedFile;
 import com.karpunets.audio_converter_bot.model.TelegramUser;
-import com.karpunets.audio_converter_bot.ffmpeg.SupportedFormat;
 import com.karpunets.audio_converter_bot.services.AudioConverterService;
 import com.karpunets.audio_converter_bot.services.AudioStorageService;
 import com.karpunets.audio_converter_bot.telegram.AudioConverterBot;
@@ -76,7 +76,7 @@ public interface TelegramHandler {
 
         converterBot.execute(new SendMessage()
                 .setChatId(message.getChatId())
-                    .setText("В який формат потрібно конвертувати?")
+                .setText("В який формат потрібно конвертувати?")
                 .setReplyMarkup(replyKeyboardMarkup));
     }
 
